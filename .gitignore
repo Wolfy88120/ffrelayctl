@@ -1,0 +1,5 @@
+.DS_Store
+*.exe
+*.tape
+ffrelayctl
+Thumbs.db
