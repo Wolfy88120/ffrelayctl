@@ -78,6 +78,7 @@ Available Commands:
   masks update                   # Update a mask
   masks delete                   # Delete a mask
   phones list                    # List phone masks (premium only)
+  phones update                  # Update a phone mask (premium only)
   profiles list                  # List available Relay profiles
 
 Use "ffrelayctl [command] --help" for more information about a command.
