@@ -86,6 +86,12 @@ dockers:
       - "ghcr.io/{{ .Env.GORELEASER_REPO_OWNER }}/{{ .ProjectName }}:latest-amd64"
     use: buildx
     dockerfile: Dockerfile
+    extra_files:
+      - go.mod
+      - go.sum
+      - main.go
+      - api
+      - cmd
     build_flag_templates:
       - "--platform=linux/amd64"
       - "--label=org.opencontainers.image.title={{ .ProjectName }}"
@@ -103,6 +109,12 @@ dockers:
       - "ghcr.io/{{ .Env.GORELEASER_REPO_OWNER }}/{{ .ProjectName }}:latest-arm64"
     use: buildx
     dockerfile: Dockerfile
+    extra_files:
+      - go.mod
+      - go.sum
+      - main.go
+      - api
+      - cmd
     build_flag_templates:
       - "--platform=linux/arm64"
       - "--label=org.opencontainers.image.title={{ .ProjectName }}"
