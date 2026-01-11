@@ -139,6 +139,21 @@ type UpdateRelayNumberRequest struct {
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
+type InboundContact struct {
+	ID               int     `json:"id"`
+	RelayNumber      int     `json:"relay_number"`
+	InboundNumber    string  `json:"inbound_number"`
+	LastInboundDate  string  `json:"last_inbound_date"`
+	LastInboundType  string  `json:"last_inbound_type"`
+	NumCalls         int     `json:"num_calls"`
+	NumCallsBlocked  int     `json:"num_calls_blocked"`
+	LastCallDate     *string `json:"last_call_date"`
+	NumTexts         int     `json:"num_texts"`
+	NumTextsBlocked  int     `json:"num_texts_blocked"`
+	LastTextDate     *string `json:"last_text_date"`
+	Blocked          bool    `json:"blocked"`
+}
+
 type APIError struct {
 	StatusCode int
 	Body       string

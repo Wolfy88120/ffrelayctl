@@ -77,10 +77,33 @@ Examples:
 	},
 }
 
+var phonesContactsCmd = &cobra.Command{
+	Use:   "contacts",
+	Short: "List inbound contacts for phone masks",
+	Long: `List contacts who have called or texted your phone masks.
+
+This command shows all inbound contacts across all your phone masks,
+including phone numbers, call/text counts, and blocking status.
+
+Note: This feature requires a premium subscription with phone masks enabled.
+If you don't have a premium subscription, you'll receive a 404 error.
+
+Examples:
+  ffrelayctl phones contacts`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		contacts, err := client.ListInboundContacts()
+		if err != nil {
+			return err
+		}
+		return printJSON(contacts)
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(phonesCmd)
 	phonesCmd.AddCommand(phonesListCmd)
 	phonesCmd.AddCommand(phonesUpdateCmd)
+	phonesCmd.AddCommand(phonesContactsCmd)
 
 	phonesUpdateCmd.Flags().Bool("enabled", false, "Enable call/text forwarding")
 	phonesUpdateCmd.Flags().Bool("disabled", false, "Disable call/text forwarding")

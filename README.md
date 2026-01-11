@@ -11,7 +11,7 @@ Firefox Relay is a privacy service from Mozilla that provides email and phone nu
 
 ## Features
 - **Email Mask Management**: Manage both random and custom domain email masks
-- **Phone Mask Management**: Manage phone number masks (premium only)
+- **Phone Mask Management**: Manage phone number masks and inbound contacts (premium only)
 - **Profile Management**: View your Relay profile and subscription status
 
 ## Installation
@@ -77,6 +77,7 @@ Available Commands:
   masks create                   # Create a new mask
   masks update                   # Update a mask
   masks delete                   # Delete a mask
+  phones contacts                # List phone contacts (premium only)
   phones list                    # List phone masks (premium only)
   phones update                  # Update a phone mask (premium only)
   profiles list                  # List available Relay profiles
@@ -110,6 +111,9 @@ $ ffrelayctl masks list | jq '.[].mask.id' | wc -l
 
 # List phone masks
 $ ffrelayctl phones list | jq
+
+# List all phone numbers that have texted your Relay number
+$ ffrelayctl phones contacts | jq '[.[] | select(.last_inbound_type == "text")]'
 
 # List all masks using Docker
 $ docker run --rm -e FFRELAYCTL_KEY=<replace-me> ffrelayctl profiles list
