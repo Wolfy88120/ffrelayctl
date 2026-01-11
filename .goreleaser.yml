@@ -141,5 +141,5 @@ docker_manifests:
 
 release:
   draft: false
-  prerelease: auto
+  prerelease: "{{ if semverCompare \"<1.0.0\" .Version }}true{{ else }}auto{{ end }}"
   mode: append
