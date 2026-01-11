@@ -72,12 +72,13 @@ Usage:
 
 Available Commands:
   help                           # Display help for any command
+  contacts list                  # List phone contacts (premium only)
+  contacts update                # Update a phone contact (premium only)
   masks list                     # List all masks
   masks get                      # Get a mask
   masks create                   # Create a new mask
   masks update                   # Update a mask
   masks delete                   # Delete a mask
-  phones contacts                # List phone contacts (premium only)
   phones list                    # List phone masks (premium only)
   phones update                  # Update a phone mask (premium only)
   profiles list                  # List available Relay profiles
@@ -113,7 +114,7 @@ $ ffrelayctl masks list | jq '.[].mask.id' | wc -l
 $ ffrelayctl phones list | jq
 
 # List all phone numbers that have texted your Relay number
-$ ffrelayctl phones contacts | jq '[.[] | select(.last_inbound_type == "text")]'
+$ ffrelayctl contacts list | jq '[.[] | select(.last_inbound_type == "text")]'
 
 # List all masks using Docker
 $ docker run --rm -e FFRELAYCTL_KEY=<replace-me> ffrelayctl profiles list
