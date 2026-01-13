@@ -16,6 +16,13 @@ Firefox Relay is a privacy service from Mozilla that provides email and phone nu
 
 ## Installation
 
+### Homebrew (macOS and Linux)
+
+```bash
+$ brew tap hastefui/tap
+$ brew install ffrelayctl
+```
+
 ### Pre-built Binaries
 
 Download, extract, and install the latest release for your platform from the [releases page](https://github.com/hastefuI/ffrelayctl/releases).
