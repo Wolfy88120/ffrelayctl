@@ -2,6 +2,17 @@ package main
 
 import "github.com/hastefuI/ffrelayctl/cmd"
 
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
 func main() {
-	cmd.Execute()
+	versionInfo := cmd.VersionInfo{
+		Version: version,
+		Commit:  commit,
+		Date:    date,
+	}
+	cmd.Execute(versionInfo)
 }

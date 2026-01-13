@@ -49,7 +49,6 @@ $ docker build -t ffrelayctl .
 Verify that the installation for ffrelayctl was successful:
 ```bash
 $ ffrelayctl --version
-ffrelayctl version x.x.x
 ```
 
 ## Quick Start

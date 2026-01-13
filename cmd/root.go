@@ -13,24 +13,29 @@ import (
 )
 
 const (
-	version    = "0.7.0"
 	envKeyName = "FFRELAYCTL_KEY"
 )
 
+type VersionInfo struct {
+	Version string
+	Commit  string
+	Date    string
+}
+
 var (
-	apiKey  string
-	baseURL string
-	timeout time.Duration = api.DefaultTimeout
-	client  *api.Client
-	ctx     context.Context
-	cancel  context.CancelFunc
+	apiKey      string
+	baseURL     string
+	timeout     time.Duration = api.DefaultTimeout
+	client      *api.Client
+	ctx         context.Context
+	cancel      context.CancelFunc
+	versionInfo VersionInfo
 )
 
 var rootCmd = &cobra.Command{
 	Use:          "ffrelayctl",
 	Short:        "Firefox Relay CLI",
 	Long:         `ffrelayctl - A CLI for Firefox Relay.`,
-	Version:      version,
 	SilenceUsage: true,
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		if cmd.Name() == "help" || cmd.Name() == "completion" {
@@ -68,24 +73,28 @@ var rootCmd = &cobra.Command{
 			opts = append(opts, api.WithBaseURL(baseURL))
 		}
 		opts = append(opts, api.WithTimeout(timeout))
-		opts = append(opts, api.WithUserAgent("ffrelayctl/"+version))
+		opts = append(opts, api.WithUserAgent("ffrelayctl/"+versionInfo.Version))
 		opts = append(opts, api.WithContext(ctx))
 		client = api.NewClient(apiKey, opts...)
 		return nil
 	},
 }
 
-func Execute() {
+func init() {
+	rootCmd.PersistentFlags().StringVar(&apiKey, "key", "", "API key for authentication")
+	rootCmd.PersistentFlags().StringVar(&baseURL, "base-url", "", fmt.Sprintf("Base URL for the API (default: %s)", api.DefaultBaseURL))
+	rootCmd.PersistentFlags().DurationVar(&timeout, "timeout", api.DefaultTimeout, "HTTP request timeout (e.g., 15s, 2m)")
+}
+
+func Execute(vi VersionInfo) {
+	versionInfo = vi
+	rootCmd.Version = vi.Version
+	rootCmd.SetVersionTemplate(fmt.Sprintf("ffrelayctl version %s\ncommit: %s\nbuilt at: %s\n", vi.Version, vi.Commit, vi.Date))
+
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
 	if cancel != nil {
 		cancel()
 	}
-}
-
-func init() {
-	rootCmd.PersistentFlags().StringVar(&apiKey, "key", "", "API key for authentication")
-	rootCmd.PersistentFlags().StringVar(&baseURL, "base-url", "", fmt.Sprintf("Base URL for the API (default: %s)", api.DefaultBaseURL))
-	rootCmd.PersistentFlags().DurationVar(&timeout, "timeout", api.DefaultTimeout, "HTTP request timeout (e.g., 15s, 2m)")
 }
