@@ -75,12 +75,13 @@ Examples:
   ffrelayctl masks list --random=true  # List only random masks
   ffrelayctl masks list --random=false # List only custom domain masks`,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		cfg := GetConfig(cmd)
 		if randomMask == nil {
-			relayAddresses, err := client.ListRelayAddresses()
+			relayAddresses, err := cfg.Client.ListRelayAddresses()
 			if err != nil {
 				return err
 			}
-			domainAddresses, err := client.ListDomainAddresses()
+			domainAddresses, err := cfg.Client.ListDomainAddresses()
 			if err != nil {
 				return err
 			}
@@ -102,13 +103,13 @@ Examples:
 		}
 
 		if *randomMask {
-			addresses, err := client.ListRelayAddresses()
+			addresses, err := cfg.Client.ListRelayAddresses()
 			if err != nil {
 				return err
 			}
 			return printJSON(addresses)
 		} else {
-			addresses, err := client.ListDomainAddresses()
+			addresses, err := cfg.Client.ListDomainAddresses()
 			if err != nil {
 				return err
 			}
@@ -130,6 +131,7 @@ Examples:
   ffrelayctl masks get 12345 --random=false # Get custom domain mask only`,
 	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		cfg := GetConfig(cmd)
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
 			return fmt.Errorf("invalid ID: %v", err)
@@ -137,13 +139,13 @@ Examples:
 
 		if randomMask != nil {
 			if *randomMask {
-				address, err := client.GetRelayAddress(id)
+				address, err := cfg.Client.GetRelayAddress(id)
 				if err != nil {
 					return err
 				}
 				return printJSON(address)
 			} else {
-				address, err := client.GetDomainAddress(id)
+				address, err := cfg.Client.GetDomainAddress(id)
 				if err != nil {
 					return err
 				}
@@ -151,18 +153,18 @@ Examples:
 			}
 		}
 
-		address, err := client.GetRelayAddress(id)
+		address, err := cfg.Client.GetRelayAddress(id)
 		if err == nil {
 			return printJSON(address)
 		}
 
-		profiles, profileErr := client.GetProfiles()
+		profiles, profileErr := cfg.Client.GetProfiles()
 		if profileErr != nil {
 			return err
 		}
 
 		if len(profiles) > 0 && profiles[0].HasPremium {
-			domainAddress, domainErr := client.GetDomainAddress(id)
+			domainAddress, domainErr := cfg.Client.GetDomainAddress(id)
 			if domainErr == nil {
 				return printJSON(domainAddress)
 			}
@@ -183,6 +185,7 @@ For random masks (--random=true, default):
 For custom domain masks (--random=false, Premium required):
   ffrelayctl masks create --random=false --address "shopping" --description "Shopping sites"`,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		cfg := GetConfig(cmd)
 		description, err := cmd.Flags().GetString("description")
 		if err != nil {
 			return fmt.Errorf("failed to get description flag: %w", err)
@@ -214,7 +217,7 @@ For custom domain masks (--random=false, Premium required):
 				BlockListEmails: blockList,
 			}
 
-			address, err := client.CreateRelayAddress(req)
+			address, err := cfg.Client.CreateRelayAddress(req)
 			if err != nil {
 				return err
 			}
@@ -235,7 +238,7 @@ For custom domain masks (--random=false, Premium required):
 				BlockListEmails: blockList,
 			}
 
-			domainAddress, err := client.CreateDomainAddress(req)
+			domainAddress, err := cfg.Client.CreateDomainAddress(req)
 			if err != nil {
 				return err
 			}
@@ -255,6 +258,7 @@ Examples:
   ffrelayctl masks update 12345 --random=false --enabled`,
 	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		cfg := GetConfig(cmd)
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
 			return fmt.Errorf("invalid ID: %v", err)
@@ -279,7 +283,7 @@ Examples:
 				req.UsedOn = &usedOn
 			}
 
-			address, err := client.UpdateRelayAddress(id, req)
+			address, err := cfg.Client.UpdateRelayAddress(id, req)
 			if err != nil {
 				return err
 			}
@@ -291,7 +295,7 @@ Examples:
 				BlockListEmails: fields.blockListEmails,
 			}
 
-			address, err := client.UpdateDomainAddress(id, req)
+			address, err := cfg.Client.UpdateDomainAddress(id, req)
 			if err != nil {
 				return err
 			}
@@ -311,6 +315,7 @@ Examples:
   ffrelayctl masks delete 12345 --random=false       # Delete custom domain mask`,
 	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		cfg := GetConfig(cmd)
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
 			return fmt.Errorf("invalid ID: %v", err)
@@ -341,12 +346,12 @@ Examples:
 		}
 
 		if randomMask == nil || *randomMask {
-			if err := client.DeleteRelayAddress(id); err != nil {
+			if err := cfg.Client.DeleteRelayAddress(id); err != nil {
 				return err
 			}
 			fmt.Printf("Random mask %d deleted successfully.\n", id)
 		} else {
-			if err := client.DeleteDomainAddress(id); err != nil {
+			if err := cfg.Client.DeleteDomainAddress(id); err != nil {
 				return err
 			}
 			fmt.Printf("Custom domain mask %d deleted successfully.\n", id)

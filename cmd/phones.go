@@ -25,7 +25,8 @@ that forward calls and texts to your real phone number.
 Examples:
   ffrelayctl phones list`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		numbers, err := client.ListRelayNumbers()
+		cfg := GetConfig(cmd)
+		numbers, err := cfg.Client.ListRelayNumbers()
 		if err != nil {
 			return err
 		}
@@ -46,6 +47,7 @@ Examples:
   ffrelayctl phones update 1 --disabled`,
 	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		cfg := GetConfig(cmd)
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
 			return fmt.Errorf("invalid ID: %v", err)
@@ -69,7 +71,7 @@ Examples:
 			Enabled: enabled,
 		}
 
-		number, err := client.UpdateRelayNumber(id, req)
+		number, err := cfg.Client.UpdateRelayNumber(id, req)
 		if err != nil {
 			return err
 		}

@@ -17,7 +17,8 @@ var profilesListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List user profiles",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		profiles, err := client.GetProfiles()
+		cfg := GetConfig(cmd)
+		profiles, err := cfg.Client.GetProfiles()
 		if err != nil {
 			return err
 		}

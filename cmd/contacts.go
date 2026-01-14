@@ -28,7 +28,8 @@ If you don't have a premium subscription, you'll receive a 404 error.
 Examples:
   ffrelayctl contacts list`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		contacts, err := client.ListInboundContacts()
+		cfg := GetConfig(cmd)
+		contacts, err := cfg.Client.ListInboundContacts()
 		if err != nil {
 			return err
 		}
@@ -51,6 +52,7 @@ Examples:
   ffrelayctl contacts update 12345 --unblock`,
 	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		cfg := GetConfig(cmd)
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
 			return fmt.Errorf("invalid ID: %v", err)
@@ -74,7 +76,7 @@ Examples:
 			Blocked: blocked,
 		}
 
-		contact, err := client.UpdateInboundContact(id, req)
+		contact, err := cfg.Client.UpdateInboundContact(id, req)
 		if err != nil {
 			return err
 		}
